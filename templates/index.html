@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Recording with Comments</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='script.js')}}" type="module"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            outline: none;
+        }
+
+        input[type="number"] {
+            width: 80px;
+        }
+
+        input[type="text"] {
+            width: 250px;
+        }
+
+        button {
+            cursor: pointer;
+            color: #ffffff;
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #recording-finished-msg {
+            display: none;
+            color: green;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #waveform {
+            margin-top: 30px;
+        }
+
+        #playButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #playButton:hover {
+            background-color: #0056b3;
+        }
+
+        #comments-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #comments-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        #comments-list li span {
+            flex-grow: 1;
+            color: #888888;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        #comments-list li i {
+            margin-right: 5px;
+        }
+
+        .fas {
+            margin-right: 5px;
+        }
+        
+        button[disabled] {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        button[disabled]:hover {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Audio Recording with Comments</h1>
+
+    <span style="visibility:hidden">
+        <div class="input-group">
+            <label for="duration-input">Recording Duration (seconds):</label>
+            <input type="number" id="duration-input" min="1" value="60">
+        </div>
+    </span>
+
+    <div class="input-group">
+        <button id="start-btn"><i class="fas fa-microphone"></i> Start Recording</button>
+        <button id="stop-btn"><i class="fas fa-stop"></i> Stop Recording</button>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="comment-input" placeholder="Enter comment" disabled>
+        <button id="add-comment-btn" disabled><i class="fas fa-comment"></i> Add Comment</button>
+    </div>
+
+    <div id="recording-finished-msg">
+        Recording finished! Comments and audio are saved.
+    </div>
+  
+    <span style="visibility:hidden">
+        <div class="input-group">
+            <button id="finish-btn" onclick="//finishRecording()">Finish Recording</button>
+        </div>
+    </span>
+
+    <div id="waveform"></div>
+
+    <button id="playButton"><i class="fas fa-play"></i> Play/Stop</button>
+
+    <h3>Comments:</h3>
+    <ul id="comments-list"></ul>
+</div>
+</body>
+</html>
